@@ -6,7 +6,7 @@ module Sidetiq
     end
 
     def initialize(*args, &block)
-      log_call "initialize"
+      log_call "initialize", :debug
 
       super
 
@@ -21,7 +21,7 @@ module Sidetiq
     private
 
     def sidetiq_finalizer
-      log_call "shutting down ..."
+      log_call "shutting down ...", :debug
     end
 
     def link_to_sidekiq_manager
@@ -31,8 +31,8 @@ module Sidetiq
       after(5) { link_to_sidekiq_manager }
     end
 
-    def log_call(call)
-      info "#{self.class.name} id: #{object_id} #{call}"
+    def log_call(call, level = :info)
+      self.__send__(level, "#{self.class.name} id: #{object_id} #{call}")
     end
   end
 end
