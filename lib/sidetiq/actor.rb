@@ -27,7 +27,7 @@ module Sidetiq
     def link_to_sidekiq_manager
       Sidekiq::CLI.instance.launcher.manager.link(current_actor)
     rescue NoMethodError
-      warn "Can't link #{self.class.name}. Sidekiq::Manager not running. Retrying in 5 seconds ..."
+      debug "Can't link #{self.class.name}. Sidekiq::Manager not running. Retrying in 5 seconds ..."
       after(5) { link_to_sidekiq_manager }
     end
 
